@@ -240,4 +240,3 @@ Would you like to start with any specific component or focus on a particular lea
 3. Plan next learning objectives
 4. Set goals for expansion
 
-Would you like to start with any specific component or focus on a particular learning aspect?
