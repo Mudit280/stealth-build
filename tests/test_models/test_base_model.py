@@ -96,3 +96,37 @@ class TestBaseModel:
         """Test the string representation of the model."""
         model = self.ConcreteModel("test-model")
         assert "ConcreteModel(model_name='test-model', device='cpu')" in str(model)
+
+    def test_get_activations(self):
+        """Test getting model activations from different layers."""
+        # 1. Arrange - Set up our test model
+        model = self.ConcreteModel("test-model")
+    
+        # Create some test activations
+        test_activations = {
+            -1: "last_layer_activations",  # Common to check last layer
+            0: "first_layer_activations",
+            5: "middle_layer_activations"
+        }
+        model.activations = test_activations
+    
+        # 2. Act & Assert - Test getting existing activations
+        # Test getting the last layer
+        assert model.get_activations(-1) == "last_layer_activations"
+    
+        # Test getting the first layer
+        assert model.get_activations(0) == "first_layer_activations"
+    
+        # Test getting a middle layer
+        assert model.get_activations(5) == "middle_layer_activations"
+    
+        # 3. Test getting non-existent layer
+        assert model.get_activations(999) is None  # Should log a warning and return None
+    
+        # 4. Test when no activations are set at all
+        model.activations = {}  # Clear activations
+        assert model.get_activations(-1) is None  # Should handle empty activations
+    
+        # 5. Test when activations attribute doesn't exist
+        delattr(model, 'activations')
+        assert model.get_activations(-1) is None  # Should handle missing attribute
