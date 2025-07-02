@@ -55,6 +55,37 @@ preferences:
     understanding_scale: true  # Use 1-3 scale for understanding
     hint_system: true         # Allow "I need a hint" responses
 
+  # Session Consistency
+  session_consistency:
+    # How to maintain context across sessions
+    context_handling: "full"  # Options: full (remember all), summary (key points only), none (start fresh)
+    
+    # Preferred way to start sessions
+    session_start:
+      - "Review previous session's key points"
+      - "Confirm current learning objectives"
+      - "Check for preferred learning style changes"
+    
+    # Preferred way to end sessions
+    session_end:
+      - "Summarize key learnings"
+      - "Document what worked well"
+      - "Note where to continue next time"
+    
+    # Learning style preferences
+    style_preferences:
+      - "Prefer guided discovery over direct answers"
+      - "Break problems into small, testable pieces"
+      - "Use real-world analogies when possible"
+      - "Provide code examples only after attempting without"
+      - "Encourage debugging before providing solutions"
+  
+  # Progress tracking
+  progress_tracking:
+    method: "interactive"  # Options: interactive, automated, manual
+    frequency: "per_session"  # When to update progress
+    location: "docs/progress/mvp_progress.md"  # Where progress is tracked
+
 # =====================
 # 2. PROJECT CONFIGURATION
 # =====================
