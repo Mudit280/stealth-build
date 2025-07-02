@@ -45,3 +45,35 @@ Test Strategy:
 Note: This implementation follows the interface defined in BaseModel while
 adding GPT-2 specific functionality.
 """
+
+import torch
+import logging
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from typing import Dict, Optional, Any, List
+from .base_model import BaseModel
+
+logger = logging.getLogger(__name__)
+
+class GPT2Model(BaseModel):
+    """
+    Implementation of GPT-2 language model with concept detection and steering capabilities.
+    """
+
+    def __init__(
+        self,
+        model_name: str = "gpt2",
+        **kwargs: Any
+    ) -> None:
+        """
+        Initialize the GPT-2 model.
+
+        Args:
+            model_name: Name of the GPT-2 model (e.g., 'gpt2', 'gpt2-medium')
+            **kwargs: Additional arguments passed to the base class
+        """
+        super().__init__(model_name=model_name, **kwargs)
+        self.tokenizer = None
+        self.model = None
+        self.activations = {}  # Store layer activations
+
+        return None
