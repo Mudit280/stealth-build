@@ -76,4 +76,49 @@ class GPT2Model(BaseModel):
         self.model = None
         self.activations = {}  # Store layer activations
 
-        return None
+    def load_model(self) -> None:
+        """
+        Load the GPT-2 model and tokenizer.
+        
+        This method:
+        1. Loads the tokenizer
+        2. Loads the model
+        3. Moves the model to the specified device (CPU/GPU)
+        4. Sets the model to evaluation mode
+        """
+        if self.is_loaded:
+            logger.info(f"Model {self.model_name} is already loaded")
+            return
+                
+        try:
+            logger.info(f"Loading tokenizer for {self.model_name}")
+            self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_name)
+                
+            # Add padding token if not present (GPT-2 doesn't have one by default)
+            # This is important for batching sequences of different lengths
+            if self.tokenizer.pad_token is None:
+                self.tokenizer.pad_token = self.tokenizer.eos_token
+                    
+            logger.info(f"Loading model {self.model_name}")
+            self.model = GPT2LMHeadModel.from_pretrained(
+                self.model_name,
+                pad_token_id=self.tokenizer.eos_token_id  # Ensure consistent padding with tokenizer
+            )
+                
+            # Move model to the specified device (CPU/GPU)
+            # This is crucial for performance - models run much faster on GPU if available
+            # The device is set during initialization (defaults to 'cpu')
+            self.model = self.model.to(self.device)
+            
+            # Set model to evaluation mode
+            # This disables certain layers like dropout and batch normalization
+            # which behave differently during training vs inference
+            self.model.eval()
+                
+            self.is_loaded = True
+            logger.info(f"Successfully loaded {self.model_name} on {self.device}")
+                
+        except Exception as e:
+            logger.error(f"Error loading model {self.model_name}: {str(e)}")
+            self.is_loaded = False
+            raise
