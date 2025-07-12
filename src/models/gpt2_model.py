@@ -1,5 +1,5 @@
 """
-GPT-2 Model Implementation
+Simple GPT-2 Model Implementation
 
 A concrete implementation of BaseModel providing access to Hugging Face's GPT-2 language model
 with concept detection and steering capabilities.
@@ -49,7 +49,7 @@ adding GPT-2 specific functionality.
 import torch
 import logging
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
-from typing import Dict, Optional, Any, List
+from typing import Dict, Optional, Any
 from .base_model import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -59,11 +59,7 @@ class GPT2Model(BaseModel):
     Implementation of GPT-2 language model with concept detection and steering capabilities.
     """
 
-    def __init__(
-        self,
-        model_name: str = "gpt2",
-        **kwargs: Any
-    ) -> None:
+    def __init__(self, model_name: str = "gpt2", **kwargs: Any) -> None:
         """
         Initialize the GPT-2 model.
 
@@ -72,9 +68,8 @@ class GPT2Model(BaseModel):
             **kwargs: Additional arguments passed to the base class
         """
         super().__init__(model_name=model_name, **kwargs)
-        self.tokenizer = None
         self.model = None
-        self.activations = {}  # Store layer activations
+        self.tokenizer = None
 
     def load_model(self) -> None:
         """
@@ -98,27 +93,77 @@ class GPT2Model(BaseModel):
             # This is important for batching sequences of different lengths
             if self.tokenizer.pad_token is None:
                 self.tokenizer.pad_token = self.tokenizer.eos_token
-                    
-            logger.info(f"Loading model {self.model_name}")
-            self.model = GPT2LMHeadModel.from_pretrained(
-                self.model_name,
-                pad_token_id=self.tokenizer.eos_token_id  # Ensure consistent padding with tokenizer
-            )
-                
-            # Move model to the specified device (CPU/GPU)
-            # This is crucial for performance - models run much faster on GPU if available
-            # The device is set during initialization (defaults to 'cpu')
-            self.model = self.model.to(self.device)
             
-            # Set model to evaluation mode
-            # This disables certain layers like dropout and batch normalization
-            # which behave differently during training vs inference
+            # Load model
+            self.model = GPT2LMHeadModel.from_pretrained(self.model_name)
+            self.model.to(self.device)
             self.model.eval()
-                
+            
             self.is_loaded = True
-            logger.info(f"Successfully loaded {self.model_name} on {self.device}")
-                
+            logger.info(f"Successfully loaded {self.model_name}")
+            
         except Exception as e:
-            logger.error(f"Error loading model {self.model_name}: {str(e)}")
-            self.is_loaded = False
+            logger.error(f"Failed to load model: {e}")
             raise
+
+    def generate(self, prompt: str, **kwargs) -> str:
+        """Generate text from prompt."""
+        if not self.is_loaded:
+            raise RuntimeError("Model not loaded. Call load_model() first.")
+        
+        if not prompt.strip():
+            raise ValueError("Prompt cannot be empty")
+        
+        try:
+            # Tokenize input
+            inputs = self.tokenizer.encode(prompt, return_tensors="pt")
+            inputs = inputs.to(self.device)
+            
+            # Set generation parameters
+            gen_kwargs = {
+                "max_length": kwargs.get("max_length", self.max_length),
+                "temperature": kwargs.get("temperature", self.temperature),
+                "top_p": kwargs.get("top_p", self.top_p),
+                "do_sample": kwargs.get("do_sample", True),
+                "pad_token_id": self.tokenizer.eos_token_id,
+            }
+            
+            # Generate
+            with torch.no_grad():
+                outputs = self.model.generate(inputs, **gen_kwargs)
+            
+            # Decode result
+            result = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+            return result
+            
+        except Exception as e:
+            logger.error(f"Generation failed: {e}")
+            raise
+
+    def detect_concepts(self, text: str) -> Dict[str, float]:
+        """Detect concepts in text using registered detectors."""
+        if not self.concept_detectors:
+            return {}
+        
+        results = {}
+        for name, detector in self.concept_detectors.items():
+            try:
+                results[name] = detector.detect(text)
+            except Exception as e:
+                logger.error(f"Concept detection failed for {name}: {e}")
+                results[name] = 0.0
+        
+        return results
+
+    def steer_output(self, concept: str, strength: float = 0.5) -> bool:
+        """Apply steering (placeholder for now)."""
+        if not (-1.0 <= strength <= 1.0):
+            logger.error(f"Invalid strength: {strength}")
+            return False
+        
+        if concept not in self.concept_detectors:
+            logger.error(f"No detector for concept: {concept}")
+            return False
+        
+        logger.info(f"Steering {concept} with strength {strength}")
+        return True
