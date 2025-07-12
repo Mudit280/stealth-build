@@ -1,0 +1,130 @@
+## Updated Task 1: Environment Setup & Basic Inference
+
+### Subtask 1.1: Complete Environment Setup
+- [x] Create virtual environment
+- [x] Install core packages (torch, transformers, numpy)
+- [x] Generate requirements.txt
+- [x] Create modular folder structure
+
+### Substack 1.1.5: Deeply define and think what trying to create - > maybe draw it out
+
+
+### Subtask 1.2: Implement GPT2Model Class
+**File**: `src/models/gpt2_model.py`
+**Goal**: Concrete implementation of BaseModel for GPT-2 Small
+
+**Acceptance Criteria**:
+- Inherits from BaseModel
+- Can load GPT-2 Small model and tokenizer
+- Implements `extract_hidden_states()` method
+- Implements `generate_text()` method
+- Can extract activations from middle layers (e.g., layer 6-8)
+- Basic error handling for model loading
+
+**Key Implementation Points**:
+- Use `output_hidden_states=True` in model forward pass
+- Handle tokenization and padding properly
+- Return hidden states in consistent format (batch_size, seq_len, hidden_size)
+
+### Subtask 1.3: Basic Testing & Validation
+**File**: `examples/test_gpt2.py`
+**Goal**: Verify GPT-2 integration works correctly
+
+**Acceptance Criteria**:
+- Can load model without errors
+- Can extract hidden states from sample text
+- Test with toxic/non-toxic samples
+- Verify hidden state shapes are correct
+- Basic text generation works
+
+---
+
+## Task 2: Linear Probe Implementation (Next Session)
+
+### Subtask 2.1: Implement LinearProbe Class
+**File**: `src/probes/linear_probe.py`
+**Goal**: Concrete implementation of BaseProbe
+
+### Subtask 2.2: Implement ToxicityConcept Class  
+**File**: `src/concepts/toxicity_concept.py`
+**Goal**: Define toxicity detection concept
+
+### Subtask 2.3: Train First Probe
+**Goal**: End-to-end probe training pipeline
+
+---
+
+## Task 3: Steering Interface (Future Session)
+
+### Subtask 3.1: Implement ConceptSteerer Class
+**File**: `src/steering/concept_steerer.py`
+**Goal**: Real-time concept steering
+
+### Subtask 3.2: Web Interface
+**Goal**: Simple web app for demonstration
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Refined First Tasks
+
+### Task 1: Environment Setup & Basic Inference
+**Goal**: Get GPT-2 Small running with hidden state extraction
+**Acceptance Criteria**: 
+- Can load GPT-2 Small model
+- Can run inference and extract hidden states from middle layers
+- Basic text preprocessing pipeline
+- Simple test with sample toxic/non-toxic text
+
+### Task 2: Toxicity Probe Implementation
+**Goal**: Linear probe that detects toxicity in text
+**Acceptance Criteria**:
+- Can train linear probe on toxicity dataset
+- Probe achieves reasonable accuracy (>70% on test set)
+- Can extract toxicity scores from new text
+- Basic evaluation metrics (accuracy, precision, recall)
+
+### Task 3: Steering Interface
+**Goal**: Web interface for real-time concept steering
+**Acceptance Criteria**:
+- Simple web app (Flask/FastAPI + basic HTML)
+- Text input → toxicity score output
+- Concept "clamping" controls (slider/buttons)
+- Real-time steering demonstration
+
+### Task 4: Company Values Probe (Stretch)
+**Goal**: Extend to company values detection
+**Acceptance Criteria**:
+- Define 2-3 company values (e.g., "customer-focused", "innovative")
+- Train probes for each value
+- Multi-concept steering interface
