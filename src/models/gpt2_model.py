@@ -70,7 +70,7 @@ class GPT2Model(BaseModel):
         super().__init__(model_name=model_name, **kwargs)
         self.model = None
         self.tokenizer = None
-
+        
     def load_model(self) -> None:
         """
         Load the GPT-2 model and tokenizer.
