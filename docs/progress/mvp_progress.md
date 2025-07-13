@@ -12,9 +12,9 @@
 - [x] Learn about Python project organization
 
 ## Hour 3-4: Linear Probe Integration (REVISED)
-- [ ] Research and integrate existing GPT-2 linear probes
- - [ ] Install concept-erasure library: `pip install concept-erasure`
- - [ ] Alternative: Install TransformerLens: `pip install transformer-lens`
+- [x] Research and integrate existing GPT-2 linear probes
+ - [n/a] Install concept-erasure library: `pip install concept-erasure`
+ - [x] Alternative: Install TransformerLens: `pip install transformer-lens`
  - [ ] Download pre-trained probes for: sentiment, formality, toxicity
  - [ ] Test probe loading and basic functionality
 - [ ] Set up GPT-2 with activation extraction
@@ -77,6 +77,8 @@
 - Pre-trained probes save significant development time
 
 ## Next Steps After MVP
+- Train gpt-2 myself, working with Karpathy or other things. 
+Deep understanding of transformers will help
 - Train custom probes on domain-specific concepts
 - Experiment with different steering techniques (activation patching, etc.)
 - Build more sophisticated interface
@@ -95,3 +97,4 @@ Last Updated: [Current Date]
 - Good test coverage established for core functionality
 - Next focus: Implement GPT2Model class and basic concept detectors
 
+git c
