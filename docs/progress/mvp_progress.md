@@ -15,8 +15,9 @@
 - [x] Research and integrate existing GPT-2 linear probes
  - [n/a] Install concept-erasure library: `pip install concept-erasure`
  - [x] Alternative: Install TransformerLens: `pip install transformer-lens`
-** - [ ] Download or train probes for: sentiment and toxicity
- - [ ] Test probe loading and classification for both concepts**
+   - [x] Assess if probes are ready for download
+   - [ ] Download or train probes for: sentiment and toxicity
+   - [ ] Test probe loading and classification for both concepts
 - [ ] Set up GPT-2 with activation extraction
  - [ ] Use transformers library with output_hidden_states=True
  - [ ] Extract activations from middle layers (layers 6-8 work well)
