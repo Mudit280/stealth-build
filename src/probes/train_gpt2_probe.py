@@ -40,7 +40,7 @@ def parse_args() -> argparse.Namespace:
 
 def load_imdb() -> datasets.DatasetDict:
     """Load IMDb dataset using HuggingFace Datasets"""
-    dataset = load_dataset("imdb")
+    dataset = datasets.load_dataset("imdb")
     print("Train example:", dataset["train"][0])
     print(f"Train size: {len(dataset['train'])}, Test size: {len(dataset['test'])}")
     return dataset
