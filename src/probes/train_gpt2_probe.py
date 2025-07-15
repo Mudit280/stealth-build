@@ -46,3 +46,9 @@ def load_imdb() -> datasets.DatasetDict:
     return dataset
 
 
+# next step - see how to work with gpt2_model.py
+
+if __name__ == "__main__":
+    args = parse_args()
+    dataset = load_imdb()
+
