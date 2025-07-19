@@ -147,6 +147,13 @@ class TestGPT2Model:
         
         assert not model.steer_output("nonexistent_concept", 0.5)
 
+    def test_extract_features_invalid_pooling(self):
+        model = GPT2Model()
+        model.model = MagicMock()
+        model.tokenizer = MagicMock()
+        with pytest.raises(ValueError):
+            model.extract_features(["test"], pooling="invalid")
+
     def test_steer_output_success(self):
         """Test successful steering."""
         model = GPT2Model()
@@ -162,7 +169,6 @@ class TestGPT2Model:
         model = GPT2Model("gpt2-medium", device="cpu")
         expected = "GPT2Model(model_name='gpt2-medium', device='cpu')"
         assert str(model) == expected
-
 
 class TestGPT2ModelIntegration:
     """Integration tests for GPT2Model with actual model loading."""
@@ -202,3 +208,13 @@ class TestGPT2ModelIntegration:
             
         except Exception as e:
             pytest.skip(f"Model loading failed: {e}") 
+    
+    @pytest.mark.slow
+    def test_extract_features():
+        model = GPT2Model(model_name="gpt2", device="cpu")
+        model.load_model()
+        texts = ["Hello world!", "Testing GPT-2 feature extraction."]
+        feats_mean = model.extract_features(texts, layer=-1, pooling="mean")
+        feats_last = model.extract_features(texts, layer=-1, pooling="last")
+        assert feats_mean.shape == (2, 768)
+        assert feats_last.shape == (2, 768)
