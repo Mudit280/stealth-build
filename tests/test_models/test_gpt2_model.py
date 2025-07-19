@@ -6,7 +6,7 @@ Tests core functionality without complex abstractions.
 
 import pytest
 import torch
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 from src.models.gpt2_model import GPT2Model
 import numpy as np
 
