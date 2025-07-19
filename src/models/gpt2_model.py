@@ -167,3 +167,50 @@ class GPT2Model(BaseModel):
         
         logger.info(f"Steering {concept} with strength {strength}")
         return True
+
+    def extract_features(self, texts: list, layer: int = -1, pooling: str = "mean") -> np.ndarray:
+        """
+        Extract features (hidden states) from input texts using GPT-2.
+
+        Args:
+            texts: List of input strings to process.
+            layer: Which GPT-2 layer to extract features from (default: last).
+            pooling: Pooling strategy to apply ("mean", "last").
+
+        Returns:
+            Array of extracted features for each input.
+        """
+        if not hasattr(self, "model") or not hasattr(self, "tokenizer"):
+            raise RuntimeError("Model and tokenizer must be loaded before extracting features.")
+
+        self.model.eval()
+        features = []
+        with torch.no_grad():
+            # Tokenize and batch
+            inputs = self.tokenizer(
+                texts,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=512
+            )
+            # Move inputs to the model's device
+            device = getattr(self, "device", "cpu")
+            inputs = {k: v.to(device) for k, v in inputs.items()}
+
+            outputs = self.model(**inputs, output_hidden_states=True)
+            hidden_states = outputs.hidden_states  # tuple: (layer0, layer1, ..., layerN)
+            selected_layer = hidden_states[layer]  # [batch_size, seq_len, hidden_dim]
+
+            if pooling == "mean":
+                pooled = selected_layer.mean(dim=1)  # mean over sequence length
+            elif pooling == "last":
+                attention_mask = inputs["attention_mask"]
+                lengths = attention_mask.sum(dim=1) - 1  # last token index for each input
+                pooled = selected_layer[range(selected_layer.size(0)), lengths]
+            else:
+                raise ValueError(f"Unknown pooling strategy: {pooling}")
+
+            features = pooled.cpu().numpy()
+
+        return features

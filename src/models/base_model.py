@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 import logging
 import torch
+import numpy as np
 
 # Set up logging
 logger = logging.getLogger(__name__)
@@ -160,6 +161,23 @@ class BaseModel(ABC):
         # Implementation will vary by model
         logger.info(f"Steering {concept} with strength {strength}")
         return True
+
+    def extract_features(self, texts: list, layer: int = -1, pooling: str = "mean") -> "np.ndarray":
+        """
+        Extract features (hidden states) from input texts.
+
+        Args:
+            texts: List of input strings to process.
+            layer: Which model layer to extract features from (default: last).
+            pooling: Pooling strategy to apply ("mean", "last", etc.).
+
+        Returns:
+            Array of extracted features for each input.
+
+        Raises:
+            NotImplementedError: If not implemented in subclass.
+        """
+        raise NotImplementedError("extract_features must be implemented by subclasses.")
     
     def __str__(self) -> str:
         """String representation of the model."""
