@@ -8,6 +8,7 @@ import pytest
 import torch
 from unittest.mock import Mock, patch
 from src.models.gpt2_model import GPT2Model
+import numpy as np
 
 
 class TestGPT2Model:

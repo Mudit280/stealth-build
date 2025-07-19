@@ -3,6 +3,7 @@
 import pytest
 from src.concept_detectors.regex_concept_detector import RegexConceptDetector
 from src.models.gpt2_model import GPT2Model
+import numpy as np
 
 class TestRegexConceptDetector:
     def test_positive_detection(self):
