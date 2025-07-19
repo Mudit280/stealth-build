@@ -16,6 +16,7 @@
  - [n/a] Install concept-erasure library: `pip install concept-erasure`
  - [x] Alternative: Install TransformerLens: `pip install transformer-lens`
    - [x] Assess if probes are ready for download
+   - [x] Add neccesary functionality to create training probe scripts
    - [ ] Download or train probes for: sentiment and toxicity
    - [ ] Test probe loading and classification for both concepts
 - [ ] Set up GPT-2 with activation extraction
