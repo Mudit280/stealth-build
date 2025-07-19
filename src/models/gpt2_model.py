@@ -51,6 +51,7 @@ import logging
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from typing import Dict, Optional, Any
 from .base_model import BaseModel
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
