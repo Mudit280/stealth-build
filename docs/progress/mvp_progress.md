@@ -17,15 +17,17 @@
  - [x] Alternative: Install TransformerLens: `pip install transformer-lens`
    - [x] Assess if probes are ready for download
    - [x] Add neccesary functionality to create training probe scripts
-   - [ ] Download or train probes for: sentiment and toxicity
-   - [ ] Test probe loading and classification for both concepts
-- [ ] Set up GPT-2 with activation extraction
- - [ ] Use transformers library with output_hidden_states=True
- - [ ] Extract activations from middle layers (layers 6-8 work well)
- - [ ] Write helper functions for activation extraction
+- [x] Set up GPT-2 with activation extraction
+ - [x] Use transformers library with output_hidden_states=True
+ - [x] Extract activations from middle layers (layers 6-8 work well)
+ - [x] Write helper functions for activation extraction
+- [ ] Download or train probes for: sentiment and toxicity
+- [ ] Test probe loading and classification for both concepts
+- [ ] Create a notebook to highlight end to end flow to ensure understanding
 - [ ] Implement concept erasure for sentiment and/or toxicity
  - [ ] Apply probe direction to erase concept
  - [ ] Demonstrate and document effect of erasure on model outputs (qualitative/quantitative)
+ - [ ] Apply english in different scripts and to different depths, workflow idea
 
 ## Hour 5-6: Probe Loading & Concept Detection
 - [ ] Implement probe loading system
