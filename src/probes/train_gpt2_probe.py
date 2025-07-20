@@ -52,3 +52,32 @@ if __name__ == "__main__":
     args = parse_args()
     dataset = load_imdb()
 
+    # --- Quick batch extraction for sanity check ---
+    from src.models.gpt2_model import GPT2Model
+    # Take a small batch
+    batch_size = 32
+    train_texts = [ex["text"] for ex in dataset["train"][:batch_size]]
+    train_labels = [ex["label"] for ex in dataset["train"][:batch_size]]
+
+    # Load GPT-2 model (on CPU for now)
+    model = GPT2Model(model_name="gpt2", device="cpu")
+    model.load_model()
+
+    # Extract mean-pooled activations from layer 7
+    features = model.extract_features(train_texts, layer=7, pooling="mean")
+    print("Features shape:", features.shape)
+    print("First feature vector (first 10 dims):", features[0][:10])
+    print("First 5 labels:", train_labels[:5])
+
+# # Next step:
+
+# Run this script and check the output.
+# Confirm the shape is 
+# (32, 768)
+#  and the values are floats.
+# If it works, you’re ready to scale up or move to probe training!
+# Reflection:
+
+# What do you notice about the distribution or range of the activation values?
+# How would you visualize or analyze these in a notebook?
+# Let me know what you see when you run it—or if you want to move on to notebook exploration or probe training!

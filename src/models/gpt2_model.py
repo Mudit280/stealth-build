@@ -215,3 +215,22 @@ class GPT2Model(BaseModel):
             features = pooled.cpu().numpy()
 
         return features
+    
+    def extract_features_multi(self, texts: list, layers: list, pooling: str = "mean") -> np.ndarray:
+        """
+        Extract features (hidden states) from input texts using GPT-2.
+
+        Args:
+            texts: List of input strings to process.
+            layers: List of GPT-2 layers to extract features from.
+            pooling: Pooling strategy to apply ("mean", "last").
+
+        Returns:
+            Array of extracted features for each input.
+        """
+        # Returns features for each layer in layers
+        all_features = []
+        for layer in layers:
+            feats = self.extract_features(texts, layer=layer, pooling=pooling)
+            all_features.append(feats)
+        return np.stack(all_features, axis=1)  # shape: (batch, num_layers, hidden_dim)
