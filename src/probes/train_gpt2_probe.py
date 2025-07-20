@@ -29,6 +29,7 @@ import torch
 import numpy as np
 import argparse
 import logging
+logging.basicConfig(level=logging.INFO)
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments for flexibility (e.g., batch size, layer, pooling type)"""
@@ -41,8 +42,8 @@ def parse_args() -> argparse.Namespace:
 def load_imdb() -> datasets.DatasetDict:
     """Load IMDb dataset using HuggingFace Datasets"""
     dataset = datasets.load_dataset("imdb")
-    print("Train example:", dataset["train"][0])
-    print(f"Train size: {len(dataset['train'])}, Test size: {len(dataset['test'])}")
+    logging.info("Train example: %s", dataset["train"][0])
+    logging.info("Train size: %d, Test size: %d", len(dataset['train']), len(dataset['test']))
     return dataset
 
 
@@ -53,31 +54,51 @@ if __name__ == "__main__":
     dataset = load_imdb()
 
     # --- Quick batch extraction for sanity check ---
-    from src.models.gpt2_model import GPT2Model
+    # We run this script from terminal
+    from models.gpt2_model import GPT2Model
     # Take a small batch
     batch_size = 32
-    train_texts = [ex["text"] for ex in dataset["train"][:batch_size]]
-    train_labels = [ex["label"] for ex in dataset["train"][:batch_size]]
+
+    # Exploratory/debugging info (visible only at DEBUG level)
+    logging.debug("Dataset keys: %s", dataset.keys())
+    logging.debug("First item in train: %s", dataset["train"][0])
+    logging.debug("Type of dataset['train']: %s", type(dataset["train"]))
+    logging.debug("Type of dataset['train'][:batch_size]: %s", type(dataset["train"][:batch_size]))
+    logging.debug("Type of dataset['train'][:batch_size]['text']: %s", type(dataset["train"][:batch_size]['text']))
+    logging.debug("Type of dataset['train'][:batch_size]['label']: %s", type(dataset["train"][:batch_size]['label']))
+
+    train_texts = dataset["train"]["text"][:batch_size]
+    train_labels = dataset["train"]["label"][:batch_size]
+
+    logging.info("Loading GPT-2 model... (this may take 10+ minutes)")
 
     # Load GPT-2 model (on CPU for now)
     model = GPT2Model(model_name="gpt2", device="cpu")
     model.load_model()
 
+    logging.info("Model loaded successfully!")
+
     # Extract mean-pooled activations from layer 7
+    logging.info("Extracting features from GPT-2...")
     features = model.extract_features(train_texts, layer=7, pooling="mean")
+    logging.info("Feature extraction complete.")
+
+    # Final user-facing results
     print("Features shape:", features.shape)
+    # shape is (batch_size, size of model hidden layer - in gpt2, this is 768)
     print("First feature vector (first 10 dims):", features[0][:10])
     print("First 5 labels:", train_labels[:5])
 
 # # Next step:
 
-# Run this script and check the output.
-# Confirm the shape is 
-# (32, 768)
-#  and the values are floats.
+
 # If it works, you’re ready to scale up or move to probe training!
-# Reflection:
+# Then Reflection:
 
 # What do you notice about the distribution or range of the activation values?
 # How would you visualize or analyze these in a notebook?
 # Let me know what you see when you run it—or if you want to move on to notebook exploration or probe training!
+
+# when to do terminal vs notebook
+# like in a few monghts coming back to what did, explanation or way to see end to end flow
+# worth having english docs, easy to understand scripts
