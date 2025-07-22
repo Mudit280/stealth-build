@@ -86,8 +86,10 @@
 ## Next Steps After MVP
 - Train gpt-2 myself, working with Karpathy or other things. 
 Deep understanding of transformers will help
+- Local agents/different things or Cloud options (either way, see if can build)
 - Train custom probes on domain-specific concepts
 - Experiment with different steering techniques (activation patching, etc.)
+- Let's  do simple train/test sets, get something working with decent performance and then as post MVP next steps, we can note down different lienar probe options
 - Build more sophisticated interface
 - Explore commercial applications
 

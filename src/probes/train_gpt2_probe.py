@@ -89,8 +89,58 @@ if __name__ == "__main__":
     print("First feature vector (first 10 dims):", features[0][:10])
     print("First 5 labels:", train_labels[:5])
 
+    # === Mini PyTorch probe training on a single batch ===
+    import torch
+    import torch.nn as nn
+    import torch.optim as optim
+    torch.manual_seed(42)
+
+    # Prepare data as tensors
+    X = torch.tensor(features, dtype=torch.float32)  # shape: (32, 768)
+    y = torch.tensor(train_labels, dtype=torch.long) # shape: (32,)
+
+    # Define a simple linear probe (for binary sentiment: 2 classes)
+    probe = nn.Linear(X.shape[1], 2)  # 768 -> 2
+    # Link for a visualisation of nn.Linear: https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sharetechnote.com%2Fhtml%2FPython_PyTorch_nn_Linear_01.html&psig=AOvVaw1pct9tCSv-KGhvbPSfnqy1&ust=1753167420609000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCLjR6POvzY4DFQAAAAAdAAAAABAK
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(probe.parameters(), lr=0.01)
+
+    print("X shape:", X.shape, "dtype:", X.dtype)
+    print("y shape:", y.shape, "dtype:", y.dtype)
+
+    # Track training time
+    import time
+    train_start = time.time()
+    logging.info("Starting probe training...")
+
+    # Training loop
+    max_epochs = 2
+    for epoch in range(max_epochs):
+        logging.info(f"Epoch {epoch}")
+        optimizer.zero_grad()
+        logits = probe(X)  # shape: (32, 2)
+        loss = criterion(logits, y)
+        loss.backward()
+        optimizer.step()
+        if epoch % 10 == 0 or loss.item() < 0.1:
+            logging.info(f"Epoch {epoch}: loss = {loss.item():.4f}")
+        if loss.item() < 0.1:
+            logging.info("Early stopping: loss below threshold.")
+            break
+
+    train_end = time.time()
+    logging.info(f"Probe training completed in {train_end - train_start:.2f} seconds.")
+
+    # Evaluate on the same batch
+    with torch.no_grad():
+        preds = torch.argmax(probe(X), dim=1)
+        accuracy = (preds == y).float().mean().item()
+    logging.info(f"Probe accuracy on this batch: {accuracy*100:.1f}% (expect high, will not generalize)")
+
 # # Next step:
 
+# memory, disk full - > alternatives? - > colab?
+# move training scripts/highlight some aspects only run in colab - > smart/best practise way of doing this?
 
 # If it works, you’re ready to scale up or move to probe training!
 # Then Reflection:
