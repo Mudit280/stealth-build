@@ -56,6 +56,7 @@
  - [ ] CLI interface with argparse
  - [ ] Simple Gradio web interface
  - [ ] Jupyter notebook demo
+ - [ ] Look into any known AI UX lessons?
 - [ ] Build end-to-end demo flow
  - [ ] Input prompt → steered generation → concept detection display
  - [ ] Show steering effects with before/after comparisons
@@ -63,6 +64,7 @@
  - [ ] Document findings and limitations
  - [ ] Create usage examples
  - [ ] Note which concepts work best
+
 
 ## Key Technical Resources
 - **Libraries**: concept-erasure, transformer-lens, transformers

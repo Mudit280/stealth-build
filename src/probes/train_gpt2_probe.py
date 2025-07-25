@@ -140,7 +140,8 @@ if __name__ == "__main__":
 # # Next step:
 
 # memory, disk full - > alternatives? - > colab?
-# move training scripts/highlight some aspects only run in colab - > smart/best practise way of doing this?
+# colab - > do github clone and then see how itt goes from there to run the training script
+# move training scripts/highlight some aspects only run in colab - > smart/best practise way of doing this
 
 # If it works, you’re ready to scale up or move to probe training!
 # Then Reflection:
