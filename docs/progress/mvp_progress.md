@@ -88,6 +88,8 @@
 ## Next Steps After MVP
 - Train gpt-2 myself, working with Karpathy or other things. 
 Deep understanding of transformers will help
+- https://ameliorology.substack.com/p/probing-activations-in-gpt2-small
+- https://github.com/milosal/activation-probes/blob/main/main.ipynb
 - Local agents/different things or Cloud options (either way, see if can build)
 - Train custom probes on domain-specific concepts
 - Experiment with different steering techniques (activation patching, etc.)
