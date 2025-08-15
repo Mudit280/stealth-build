@@ -1,0 +1,14 @@
+
+For helpful_sentences versus non_helpful_sentences on attn data, score was 0.8727272727272727
+For layer 0 helpful versus non_helpful on attn data, score was 0.9272727272727272
+For layer 1 helpful versus non_helpful on attn data, score was 0.9454545454545454
+For layer 2 helpful versus non_helpful on attn data, score was 1.0
+For layer 3 helpful versus non_helpful on attn data, score was 1.0
+For layer 4 helpful versus non_helpful on attn data, score was 0.9636363636363636
+For layer 5 helpful versus non_helpful on attn data, score was 0.9636363636363636
+For layer 6 helpful versus non_helpful on attn data, score was 0.9818181818181818
+For layer 7 helpful versus non_helpful on attn data, score was 0.9636363636363636
+For layer 8 helpful versus non_helpful on attn data, score was 0.9818181818181818
+For layer 9 helpful versus non_helpful on attn data, score was 0.9818181818181818
+For layer 10 helpful versus non_helpful on attn data, score was 0.9636363636363636
+For layer 11 helpful versus non_helpful on attn data, score was 0.9636363636363636

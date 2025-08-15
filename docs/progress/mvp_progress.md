@@ -1,7 +1,6 @@
-
 # MVP Development Progress Tracker - REVISED
 
-## Hour 1-2: Project Setup & Initial Learning ✅
+## Hour 1-2: Project Setup & Initial Learning 
 - [x] Set up development environment
  - [x] Python virtual environment
  - [x] Basic project structure
@@ -39,6 +38,43 @@
  - [ ] Test with example texts for each concept
  - [ ] Validate probe outputs make sense (sanity checks)
 - [ ] Write tests for concept detection accuracy
+
+## Linear Probes: Plan & Checklist
+
+* __Artifact format__
+  - Torch `state_dict` of a single `nn.Linear` layer saved as `probe.pt`.
+  - JSON metadata `probe.json`: `model_name` (e.g., `gpt2`), `layer` (int), `pooling` (`mean|last`), `hidden_size` (e.g., 768), `num_classes`, `label_map`, optional `feature_norm`.
+  - Storage path convention: `artifacts/probes/<concept>_<model>_layer<k>_<pooling>/`.
+
+* __IO utilities__
+  - Add `src/probes/probe_utils.py` to `save_probe(probe, meta, path)` and `load_probe(path)`.
+  - Ensure device handling and dtype consistency; validate `hidden_size` vs loaded `nn.Linear`.
+
+* __Model integration__
+  - Use `GPT2Model.extract_features(texts, layer, pooling)` from `src/models/gpt2_model.py`.
+  - Provide a helper (either in `probe_utils.py` or a light wrapper) to run features → probe → logits → probs/labels.
+  - Optional: `GPT2Model.run_probe(texts, probe, meta)` convenience to bundle extraction + inference.
+
+* __Optional concept-detector wrapper__
+  - Implement `LinearProbeConceptDetector` in `src/concept_detectors/` to expose `detect(text) -> float|dict`.
+  - Register on `GPT2Model` to surface via `GPT2Model.detect_concepts(text)`.
+
+* __Tests__
+  - Unit: probe IO round-trip (save→load→identical outputs on fixed inputs).
+  - Unit: shape/device tests for feature extraction and probe forward pass.
+  - Integration: tiny batch through `GPT2Model.extract_features()` + loaded probe; verify probabilities sum to 1 and shapes match.
+
+* __Acceptance criteria__
+  - A trained probe can be saved and later loaded to classify new texts consistently.
+  - Given metadata (`layer`, `pooling`), inference uses the correct hidden states.
+  - Optional detector wrapper returns a stable score via `detect_concepts`.
+
+Status (initial):
+- [x] Feature extractor available: `GPT2Model.extract_features()`
+- [ ] IO helpers implemented
+- [ ] Model helper/wrapper implemented
+- [ ] Concept-detector wrapper implemented (optional)
+- [ ] Tests added and passing
 
 ## Hour 7-8: Basic Activation Steering
 - [ ] Implement activation steering mechanism
@@ -97,7 +133,7 @@ Deep understanding of transformers will help
 - Build more sophisticated interface
 - Explore commercial applications
 
-Last Updated: [Current Date]
+Last Updated: 2025-08-15
 
 ## Key Metrics
 - **Test Coverage**: 78% (base_model.py)

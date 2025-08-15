@@ -141,6 +141,10 @@ if __name__ == "__main__":
 
 # based on colab use, update comments and top of relevant scripts and highlight relevant changes if and when needed!
 
+# imp resources include:
+# https://github.com/curt-tigges/probity/blob/main/tutorials/1-probity-basics.py
+# https://github.com/TransformerLensOrg/TransformerLens?utm_source=chatgpt.com
+
 # memory, disk full - > alternatives? - > colab?
 # colab - > do github clone and then see how itt goes from there to run the training script
 # move training scripts/highlight some aspects only run in colab - > smart/best practise way of doing this
