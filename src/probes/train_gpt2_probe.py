@@ -1,4 +1,6 @@
 """
+Ignore this script - We are using C:\Users\mudit\stealth-build\public_training_probe_script.ipynb for probes for now
+
 1. **Imports and Argument Parsing**
     * Import necessary libraries (transformers, datasets, torch, etc.)
     * Parse command-line arguments for flexibility (e.g., batch size, layer, pooling type)

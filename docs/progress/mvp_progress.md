@@ -20,44 +20,34 @@
  - [x] Use transformers library with output_hidden_states=True
  - [x] Extract activations from middle layers (layers 6-8 work well)
  - [x] Write helper functions for activation extraction
-- [ ] Download or train probes for: sentiment and toxicity
 - [ ] Test probe loading and classification for both concepts
 - [ ] Create a notebook to highlight end to end flow to ensure understanding
-- [ ] Implement concept erasure for sentiment and/or toxicity
- - [ ] Apply probe direction to erase concept
- - [ ] Demonstrate and document effect of erasure on model outputs (qualitative/quantitative)
- - [ ] Apply english in different scripts and to different depths, workflow idea
+- [ ] Implement concept erasure using existing probe script
+ - [ ] Data Preparation
+   - [ ] Prepare labeled datasets using existing prompt templates
+   - [ ] Use `populate_data()` to extract activations
+ - [ ] Probe Training & Analysis
+   - [ ] Train logistic regression probes using `read_and_train()`
+   - [ ] Identify optimal layers for concept representation
+   - [ ] Extract concept direction vectors from trained probes
+ - [ ] Concept Erasure Implementation
+   - [ ] Modify model forward pass to subtract concept direction
+   - [ ] Implement erasure strength control
+   - [ ] Create utility functions for applying erasure
+ - [ ] Evaluation
+   - [ ] Qualitative: Compare model outputs before/after erasure
+   - [ ] Quantitative: Measure concept presence with probe
+   - [ ] Document effect on model behavior
 
-## Hour 5-6: Probe Loading & Concept Detection
-- [ ] Implement probe loading system
- - [ ] Load pre-trained linear probe weights
- - [ ] Create probe interface for consistent API
- - [ ] Handle different probe formats/architectures
-- [ ] Build concept detection pipeline
- - [ ] Input text → GPT-2 → extract activations → probe predictions
- - [ ] Test with example texts for each concept
- - [ ] Validate probe outputs make sense (sanity checks)
-- [ ] Write tests for concept detection accuracy
-
-## Linear Probes: Plan & Checklist
-
-* __Artifact format__
-  - Torch `state_dict` of a single `nn.Linear` layer saved as `probe.pt`.
-  - JSON metadata `probe.json`: `model_name` (e.g., `gpt2`), `layer` (int), `pooling` (`mean|last`), `hidden_size` (e.g., 768), `num_classes`, `label_map`, optional `feature_norm`.
-  - Storage path convention: `artifacts/probes/<concept>_<model>_layer<k>_<pooling>/`.
-
-* __IO utilities__
-  - Add `src/probes/probe_utils.py` to `save_probe(probe, meta, path)` and `load_probe(path)`.
-  - Ensure device handling and dtype consistency; validate `hidden_size` vs loaded `nn.Linear`.
-
-* __Model integration__
-  - Use `GPT2Model.extract_features(texts, layer, pooling)` from `src/models/gpt2_model.py`.
-  - Provide a helper (either in `probe_utils.py` or a light wrapper) to run features → probe → logits → probs/labels.
-  - Optional: `GPT2Model.run_probe(texts, probe, meta)` convenience to bundle extraction + inference.
-
-* __Optional concept-detector wrapper__
-  - Implement `LinearProbeConceptDetector` in `src/concept_detectors/` to expose `detect(text) -> float|dict`.
-  - Register on `GPT2Model` to surface via `GPT2Model.detect_concepts(text)`.
+## Hour 5-6: Probe Integration & Testing
+- [ ] Set up probe-based concept detection
+ - [ ] Use existing `get_layer_actives()` for activation extraction
+ - [ ] Implement probe inference on new text
+ - [ ] Validate detection with example texts
+- [ ] Create concept erasure demo
+ - [ ] Jupyter notebook showing end-to-end workflow
+ - [ ] Examples of successful concept erasure
+ - [ ] Documentation of limitations and edge cases
 
 * __Tests__
   - Unit: probe IO round-trip (save→load→identical outputs on fixed inputs).
