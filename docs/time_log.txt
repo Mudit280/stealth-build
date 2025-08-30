@@ -1,4 +1,4 @@
-Time Log
+Time Log - Simply to log time spent on development
 ========
 Target: 10 hours/week
 
@@ -10,11 +10,7 @@ Format: DATE | START-END TIME | DURATION | TASK
 
 YYYY-MM-DD | HH:MM-HH:MM | Xh Ym | Description of the task
 
-
 Weekly Total: 1h 30m
-
-Summary (focusing on development)
-- Saved linear probe
 
 (Copy the section below for each new week)
 --------------------------------------------------
