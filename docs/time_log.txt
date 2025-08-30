@@ -1,0 +1,32 @@
+Time Log
+========
+Target: 10 hours/week
+
+--------------------------------------------------
+Week of: 2025-08-25 to 2025-08-31
+--------------------------------------------------
+
+Format: DATE | START-END TIME | DURATION | TASK
+
+YYYY-MM-DD | HH:MM-HH:MM | Xh Ym | Description of the task
+
+
+Weekly Total: Hh Mm
+
+Summary:
+- A brief summary of what was accomplished this week.
+- Any reflections or notes.
+
+
+(Copy the section below for each new week)
+--------------------------------------------------
+Week of: YYYY-MM-DD to YYYY-MM-DD
+--------------------------------------------------
+
+YYYY-MM-DD | HH:MM-HH:MM | Xh Ym | Description of the task
+
+Weekly Total: Hh Mm
+
+Summary:
+-
+
