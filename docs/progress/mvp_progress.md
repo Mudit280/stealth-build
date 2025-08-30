@@ -20,16 +20,15 @@
  - [x] Use transformers library with output_hidden_states=True
  - [x] Extract activations from middle layers (layers 6-8 work well)
  - [x] Write helper functions for activation extraction
-- [ ] Test probe loading and classification for both concepts
-- [ ] Create a notebook to highlight end to end flow to ensure understanding
-- [ ] Implement concept erasure using existing probe script
- - [ ] Data Preparation
-   - [ ] Prepare labeled datasets using existing prompt templates
-   - [ ] Use `populate_data()` to extract activations
- - [ ] Probe Training & Analysis
-   - [ ] Train logistic regression probes using `read_and_train()`
-   - [ ] Identify optimal layers for concept representation
-   - [ ] Extract concept direction vectors from trained probes
+- [x] Test probe loading and classification for both concepts
+- [x] Create a notebook to highlight end to end flow to ensure understanding
+ - [x] Data Preparation
+   - [x] Prepare labeled datasets using existing prompt templates
+   - [x] Use `populate_data()` to extract activations
+ - [x] Probe Training & Analysis
+   - [x] Train logistic regression probes using `read_and_train()`
+   - [x] Identify optimal layers for concept representation (Layers 2-3 show 100% accuracy)
+   - [x] Extract concept direction vectors from trained probes
  - [ ] Concept Erasure Implementation
    - [ ] Modify model forward pass to subtract concept direction
    - [ ] Implement erasure strength control
@@ -112,6 +111,7 @@ Status (initial):
 - Pre-trained probes save significant development time
 
 ## Next Steps After MVP
+- Address the `torch.load` issue with scikit-learn probes. The current workaround is using `weights_only=False`, but a more robust solution is needed to ensure model portability and security. This may involve saving and loading the probe's state dictionary instead of the entire object.
 - Train gpt-2 myself, working with Karpathy or other things. 
 Deep understanding of transformers will help
 - https://ameliorology.substack.com/p/probing-activations-in-gpt2-small
