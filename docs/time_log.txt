@@ -11,12 +11,10 @@ Format: DATE | START-END TIME | DURATION | TASK
 YYYY-MM-DD | HH:MM-HH:MM | Xh Ym | Description of the task
 
 
-Weekly Total: Hh Mm
+Weekly Total: 1h 30m
 
-Summary:
-- A brief summary of what was accomplished this week.
-- Any reflections or notes.
-
+Summary (focusing on development)
+- Saved linear probe
 
 (Copy the section below for each new week)
 --------------------------------------------------
