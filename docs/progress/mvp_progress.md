@@ -38,43 +38,30 @@
    - [ ] Quantitative: Measure concept presence with probe
    - [ ] Document effect on model behavior
 
-## Hour 5-6: Probe Integration & Testing
-- [ ] Set up probe-based concept detection
- - [ ] Use existing `get_layer_actives()` for activation extraction
- - [ ] Implement probe inference on new text
- - [ ] Validate detection with example texts
-- [ ] Create concept erasure demo
- - [ ] Jupyter notebook showing end-to-end workflow
- - [ ] Examples of successful concept erasure
- - [ ] Documentation of limitations and edge cases
+## Hour 5-6: Probe Integration for Concept Detection
+- [ ] **Goal**: Load the trained probe and use it to detect concepts in new text.
+- [ ] Implement I/O helpers to load the saved probe (`probe.pt`).
+- [ ] Create a `ConceptDetector` class that wraps the probe.
+  - [ ] The class should take a model and a probe as input.
+  - [ ] It should have a `detect()` method that runs inference on new text.
+- [ ] Write unit tests for the detector.
+  - [ ] Test loading the probe.
+  - [ ] Test detection logic with known inputs and expected outputs.
 
-* __Tests__
-  - Unit: probe IO round-trip (save→load→identical outputs on fixed inputs).
-  - Unit: shape/device tests for feature extraction and probe forward pass.
-  - Integration: tiny batch through `GPT2Model.extract_features()` + loaded probe; verify probabilities sum to 1 and shapes match.
-
-* __Acceptance criteria__
+* __Acceptance Criteria__
   - A trained probe can be saved and later loaded to classify new texts consistently.
-  - Given metadata (`layer`, `pooling`), inference uses the correct hidden states.
-  - Optional detector wrapper returns a stable score via `detect_concepts`.
+  - The `ConceptDetector` returns a stable score for a given concept.
 
-Status (initial):
-- [x] Feature extractor available: `GPT2Model.extract_features()`
-- [ ] IO helpers implemented
-- [ ] Model helper/wrapper implemented
-- [ ] Concept-detector wrapper implemented (optional)
-- [ ] Tests added and passing
-
-## Hour 7-8: Basic Activation Steering
-- [ ] Implement activation steering mechanism
- - [ ] Extract probe direction vectors from linear weights
- - [ ] Add/subtract vectors from activations during generation
- - [ ] Use generate() with custom forward hooks in PyTorch
- - [ ] Implement steering strength parameter (alpha)
-- [ ] Test steering effects
- - [ ] Simple prompts with different steering values
- - [ ] Measure before/after concept scores
- - [ ] Document which concepts steer effectively
+## Hour 7-8: Activation Steering & Erasure
+- [ ] **Goal**: Modify model activations during generation to control concept presence.
+- [ ] Consolidate `Concept Erasure` and `Activation Steering` tasks.
+- [ ] Extract the concept direction vector from the probe's weights.
+- [ ] Implement a forward hook in the model to modify activations.
+  - [ ] Add/subtract the direction vector from the hidden states.
+  - [ ] Include a steering strength parameter (`alpha`).
+- [ ] Test the steering effects on text generation.
+  - [ ] Compare generated text with and without steering.
+  - [ ] Measure the change in concept presence using the probe itself.
 
 ## Hour 9-10: Integration & Interface
 - [ ] Create simple interface (choose one)
