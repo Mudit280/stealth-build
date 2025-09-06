@@ -29,24 +29,19 @@
    - [x] Train logistic regression probes using `read_and_train()`
    - [x] Identify optimal layers for concept representation (Layers 2-3 show 100% accuracy)
    - [x] Extract concept direction vectors from trained probes
- - [ ] Concept Erasure Implementation
-   - [ ] Modify model forward pass to subtract concept direction
-   - [ ] Implement erasure strength control
-   - [ ] Create utility functions for applying erasure
- - [ ] Evaluation
-   - [ ] Qualitative: Compare model outputs before/after erasure
-   - [ ] Quantitative: Measure concept presence with probe
-   - [ ] Document effect on model behavior
 
-## Hour 5-6: Probe Integration for Concept Detection
-- [ ] **Goal**: Load the trained probe and use it to detect concepts in new text.
-- [ ] Implement I/O helpers to load the saved probe (`probe.pt`).
-- [ ] Create a `ConceptDetector` class that wraps the probe.
-  - [ ] The class should take a model and a probe as input.
-  - [ ] It should have a `detect()` method that runs inference on new text.
-- [ ] Write unit tests for the detector.
-  - [ ] Test loading the probe.
-  - [ ] Test detection logic with known inputs and expected outputs.
+## Hour 5-6: Probe Integration & Training Refactor
+- [x] **Goal**: Load the trained probe and use it to detect concepts in new text.
+- [x] Create a `ConceptDetector` class that wraps the probe.
+- [x] Write unit tests for the detector with mocked dependencies.
+- [x] Write integration test to validate against a real model and probe.
+- [ ] **Debug & Refactor**:
+    - [x] Diagnosed integration test failure: mismatch between training and inference data processing (missing scaling).
+    - [ ] **Next**: Refactor the probe training script (`train_gpt2_probe.py`) to be more robust.
+        - [ ] Use `scikit-learn` `Pipeline` to bundle the `StandardScaler` and `LogisticRegression` classifier.
+        - [ ] Save the entire pipeline object using `joblib` instead of `torch.save`.
+    - [ ] Update `ProbeConceptDetector` to load and use the new pipeline.
+    - [ ] Re-run integration tests to confirm the fix.
 
 * __Acceptance Criteria__
   - A trained probe can be saved and later loaded to classify new texts consistently.
@@ -62,6 +57,15 @@
 - [ ] Test the steering effects on text generation.
   - [ ] Compare generated text with and without steering.
   - [ ] Measure the change in concept presence using the probe itself.
+
+( - [ ] Concept Erasure Implementation
+   - [ ] Modify model forward pass to subtract concept direction
+   - [ ] Implement erasure strength control
+   - [ ] Create utility functions for applying erasure
+ - [ ] Evaluation
+   - [ ] Qualitative: Compare model outputs before/after erasure
+   - [ ] Quantitative: Measure concept presence with probe
+   - [ ] Document effect on model behavior)
 
 ## Hour 9-10: Integration & Interface
 - [ ] Create simple interface (choose one)
