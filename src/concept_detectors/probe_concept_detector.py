@@ -19,8 +19,21 @@ class ProbeConceptDetector(BaseConceptDetector):
             layer: The model layer from which to extract activations.
         """
         self.model = model
-        self.probe = joblib.load(probe_path)
+        self.probe = self.load_probe(probe_path)
         self.layer = layer
+
+    def load_probe(self, probe_path: str):
+        """
+        Loads the probe from the given path using joblib.
+
+        Args:
+            probe_path (str): The path to the saved probe file.
+
+        Returns:
+            The loaded probe object.
+        """
+        # The probe is a scikit-learn pipeline saved with joblib.
+        return joblib.load(probe_path)
 
     def detect(self, text: str) -> float:
         """

@@ -80,6 +80,7 @@
  - [ ] Document findings and limitations
  - [ ] Create usage examples
  - [ ] Note which concepts work best
+ - [ ] At the end, have a place where each script is explained in plain english
 
 
 ## Key Technical Resources
@@ -102,6 +103,7 @@
 - Pre-trained probes save significant development time
 
 ## Next Steps After MVP
+- Add hallucination toolkit
 - Address the `torch.load` issue with scikit-learn probes. The current workaround is using `weights_only=False`, but a more robust solution is needed to ensure model portability and security. This may involve saving and loading the probe's state dictionary instead of the entire object.
 - Train gpt-2 myself, working with Karpathy or other things. 
 Deep understanding of transformers will help
