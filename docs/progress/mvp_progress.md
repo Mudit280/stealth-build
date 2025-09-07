@@ -51,15 +51,15 @@ please take the hours with a grain of salt haha!
   - The `ConceptDetector` returns a stable score for a given concept.
 
 ## Hour 7-8: Activation Steering & Erasure
-- [ ] **Goal**: Modify model activations during generation to control concept presence.
-- [ ] Consolidate `Concept Erasure` and `Activation Steering` tasks.
-- [ ] Extract the concept direction vector from the probe's weights.
-- [ ] Implement a forward hook in the model to modify activations.
-  - [ ] Add/subtract the direction vector from the hidden states.
-  - [ ] Include a steering strength parameter (`alpha`).
-- [ ] Test the steering effects on text generation.
-  - [ ] Compare generated text with and without steering.
-  - [ ] Measure the change in concept presence using the probe itself.
+- [x] **Goal**: Modify model activations during generation to control concept presence.
+- [x] Consolidate `Concept Erasure` and `Activation Steering` tasks.
+- [x] Extract the concept direction vector from the probe's weights.
+- [x] Implement a forward hook in the model to modify activations.
+  - [x] Add/subtract the direction vector from the hidden states.
+  - [x] Include a steering strength parameter (`alpha`).
+- [x] Test the steering effects on text generation.
+  - [x] Compared generated text with and without steering.
+  - [x] Measured the change in concept presence using the probe itself.
 
 ( - [ ] Concept Erasure Implementation
    - [ ] Modify model forward pass to subtract concept direction
@@ -85,6 +85,7 @@ please take the hours with a grain of salt haha!
  - [ ] Note which concepts work best
  - [x] At the end, have a place where each script is explained in plain english
     - [x] Created `explanation_train_gpt2_probe.md`
+  - See what to do with csv files and how play into code
 
 
 ## Key Technical Resources

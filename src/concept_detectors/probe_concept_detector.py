@@ -1,4 +1,5 @@
 import joblib
+import numpy as np
 
 from .base_concept_detector import BaseConceptDetector
 from ..models.gpt2_model import GPT2Model
@@ -55,3 +56,21 @@ class ProbeConceptDetector(BaseConceptDetector):
 
         # 3. Return the probability for the positive class (class 1).
         return probabilities[0, 1]
+
+    def get_concept_vector(self) -> np.ndarray:
+        """
+        Extracts the concept direction vector from the trained probe.
+
+        The concept vector is the weight vector of the logistic regression classifier.
+
+        Returns:
+            np.ndarray: The concept direction vector.
+        """
+        # The classifier is the second step in the pipeline, named 'classifier'.
+        classifier = self.probe.named_steps['classifier']
+
+        # The coefficients (weights) of the classifier define the concept direction.
+        # For a binary classifier, coef_ has shape (1, n_features), so we get the first row.
+        concept_vector = classifier.coef_[0]
+
+        return concept_vector
