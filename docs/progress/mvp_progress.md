@@ -1,5 +1,8 @@
 # MVP Development Progress Tracker - REVISED
 
+Some of these tasks have taken much longer than initially scope, so 
+please take the hours with a grain of salt haha!
+
 ## Hour 1-2: Project Setup & Initial Learning 
 - [x] Set up development environment
  - [x] Python virtual environment
@@ -35,13 +38,13 @@
 - [x] Create a `ConceptDetector` class that wraps the probe.
 - [x] Write unit tests for the detector with mocked dependencies.
 - [x] Write integration test to validate against a real model and probe.
-- [ ] **Debug & Refactor**:
+- [x] **Debug & Refactor**:
     - [x] Diagnosed integration test failure: mismatch between training and inference data processing (missing scaling).
-    - [ ] **Next**: Refactor the probe training script (`train_gpt2_probe.py`) to be more robust.
-        - [ ] Use `scikit-learn` `Pipeline` to bundle the `StandardScaler` and `LogisticRegression` classifier.
-        - [ ] Save the entire pipeline object using `joblib` instead of `torch.save`.
-    - [ ] Update `ProbeConceptDetector` to load and use the new pipeline.
-    - [ ] Re-run integration tests to confirm the fix.
+    - [x] **Completed**: Refactored the probe training script (`train_gpt2_probe.py`) to be more robust.
+        - [x] Used `scikit-learn` `Pipeline` to bundle the `StandardScaler` and `LogisticRegression` classifier.
+        - [x] Saved the entire pipeline object using `joblib` instead of `torch.save`.
+    - [x] Updated `ProbeConceptDetector` to load and use the new pipeline.
+    - [x] Re-ran integration tests to confirm the fix.
 
 * __Acceptance Criteria__
   - A trained probe can be saved and later loaded to classify new texts consistently.
@@ -80,7 +83,8 @@
  - [ ] Document findings and limitations
  - [ ] Create usage examples
  - [ ] Note which concepts work best
- - [ ] At the end, have a place where each script is explained in plain english
+ - [x] At the end, have a place where each script is explained in plain english
+    - [x] Created `explanation_train_gpt2_probe.md`
 
 
 ## Key Technical Resources
@@ -116,7 +120,7 @@ Deep understanding of transformers will help
 - Build more sophisticated interface
 - Explore commercial applications
 
-Last Updated: 2025-08-15
+Last Updated: 2025-09-07
 
 ## Key Metrics
 - **Test Coverage**: 78% (base_model.py)
