@@ -1,8 +1,8 @@
 import joblib
 import numpy as np
 
-from .base_concept_detector import BaseConceptDetector
-from ..models.gpt2_model import GPT2Model
+from src.concept_detectors.base_concept_detector import BaseConceptDetector
+from src.models.gpt2_model import GPT2Model
 
 
 class ProbeConceptDetector(BaseConceptDetector):

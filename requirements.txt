@@ -9,9 +9,8 @@ pandas>=2.0.0
 scikit-learn==1.4.2
 plotly
 
-# Web interface (for Task 3)
-flask>=2.3.0
-flask-cors>=4.0.0
+# Web interface
+streamlit>=1.25.0
 
 # Visualization (for activation plots)
 matplotlib>=3.7.0

@@ -61,6 +61,10 @@ please take the hours with a grain of salt haha!
   - [x] Compared generated text with and without steering.
   - [x] Measured the change in concept presence using the probe itself.
 
+<!--
+(DEPRIORITIZED) Concept Erasure Implementation has been postponed.
+Initial research is documented in `docs/conceptual explanation/understanding_concept_erasure.md` for future reference.
+
 ( - [ ] Concept Erasure Implementation
    - [ ] Modify model forward pass to subtract concept direction
    - [ ] Implement erasure strength control
@@ -69,12 +73,13 @@ please take the hours with a grain of salt haha!
    - [ ] Qualitative: Compare model outputs before/after erasure
    - [ ] Quantitative: Measure concept presence with probe
    - [ ] Document effect on model behavior)
+-->
 
 ## Hour 9-10: Integration & Interface
-- [ ] Create simple interface (choose one)
- - [ ] CLI interface with argparse
- - [ ] Simple Gradio web interface
- - [ ] Jupyter notebook demo
+- [x] Create simple interface (Streamlit chosen)
+ - [ ] ~~CLI interface with argparse~~
+ - [ ] Simple Streamlit web interface
+ - [ ] ~~Jupyter notebook demo~~
  - [ ] Look into any known AI UX lessons?
 - [ ] Build end-to-end demo flow
  - [ ] Input prompt → steered generation → concept detection display
