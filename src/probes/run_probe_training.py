@@ -20,6 +20,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from transformer_lens import HookedTransformer
+from tqdm.auto import tqdm
 
 # Configure logging
 logging.basicConfig(
@@ -112,17 +113,25 @@ def get_model_activations(
 
     hook_name = utils.get_act_name("post", layer)
 
-    for sentence in sentences:
+    for sentence in tqdm(sentences, desc="Generating activations"):
+        # The hook will append the activations to the list
         _ = model.run_with_hooks(
             sentence,
             fwd_hooks=[(hook_name, hook_fn)],
             stop_at_layer=layer + 1,
         )
 
-    # Stack and select the neuron index if provided
-    activations = np.vstack(activations)
+    # Process activations to get the last token of each
+    processed_activations = []
+    for act in activations:
+        # Squeeze the batch dimension and take the last token's activations
+        last_token_activation = act.squeeze(0)[-1, :]
+        processed_activations.append(last_token_activation)
+
+    activations = np.vstack(processed_activations)
+
     if neuron_index is not None:
-        activations = activations[:, :, neuron_index]
+        activations = activations[:, neuron_index]
 
     return activations
 

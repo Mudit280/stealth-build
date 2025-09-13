@@ -88,6 +88,7 @@ Initial research is documented in `docs/conceptual explanation/understanding_con
  - [ ] Document findings and limitations
  - [ ] Create usage examples
  - [ ] Note which concepts work best
+ - [ ] Add some timing notes and logging . Especially in training the probe, to avoid staring blankly at the terminal 
  - [x] At the end, have a place where each script is explained in plain english
     - [x] Created `explanation_train_gpt2_probe.md`
   - See what to do with csv files and how play into code
@@ -113,6 +114,8 @@ Initial research is documented in `docs/conceptual explanation/understanding_con
 - Pre-trained probes save significant development time
 
 ## Next Steps After MVP
+- Dependong on goal, do bigger test and more accurate probe
+- Move to sparse autoencoders
 - Add hallucination toolkit
 - Address the `torch.load` issue with scikit-learn probes. The current workaround is using `weights_only=False`, but a more robust solution is needed to ensure model portability and security. This may involve saving and loading the probe's state dictionary instead of the entire object.
 - Train gpt-2 myself, working with Karpathy or other things. 
@@ -126,7 +129,7 @@ Deep understanding of transformers will help
 - Build more sophisticated interface
 - Explore commercial applications
 
-Last Updated: 2025-09-07
+Last Updated: 2025-09-13
 
 ## Key Metrics
 - **Test Coverage**: 78% (base_model.py)
