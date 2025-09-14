@@ -16,76 +16,37 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run the development server
-python src/main.py
+# 4. Train a Concept Probe
+# Choose a concept (e.g., 'helpfulness') and a layer (e.g., 6)
+python src/probes/run_probe_training.py --concept helpfulness --layer 6
+
+# 5. Run the Streamlit Application
+streamlit run src/app.py
 ```
 
 ## 📚 Documentation
 
-### Project Planning
-- [MVP Vision & Scope](./docs/planning/mvp_vision.md)
-- [10-Hour Implementation Plan](./docs/planning/10_hour_plan.md)
-- [Learning Plan & Progress](./docs/planning/learning_plan.md)
-
-### Architecture
-- [System Architecture](./docs/architecture/overview.md)
-- [API Documentation](./docs/architecture/api.md)
-- [Testing Strategy](./docs/architecture/testing.md)
-
-## 🎯 Project Goals
-
-### Phase 1: Core Functionality (10-Hour MVP)
-- [x] Project setup and planning
-- [ ] GPT-2 model integration
-- [ ] Basic concept detection
-- [ ] Simple steering interface
-- [ ] Test coverage
-
-### Future Goals
-- Real-time chatbot with explainable concept manipulation
-- Advanced steering capabilities
-- Support for multiple models
-- Commercial integration patterns
-
-## 🏗️ Architecture
-
-### Core Components
-- **Model**: GPT-2 Small (for initial development)
-- **Probe Type**: Linear probes on hidden states
-- **Interface**: Command-line with basic web UI
-- **Testing**: Pytest with 80%+ coverage target
+- **Code Explanations**: Detailed walkthroughs of key scripts can be found in `docs/code explanations`.
+- **Project Progress**: The high-level project plan and progress tracker is in `docs/progress/mvp_progress.md`.
 
 ## 📂 Project Structure
 ```
 .
-├── src/                    # Source code
+├── src/                    # Source code (models, detectors, app)
+├── probes/                 # Trained probe files and activation data
 ├── tests/                  # Test files
 ├── docs/                   # Documentation
-│   ├── planning/           # Planning documents
-│   └── architecture/       # Architecture docs
-├── data/                   # Training and test data
-├── notebooks/              # Jupyter notebooks
+├── archive/                # Old notebooks and data files
 ├── requirements.txt        # Python dependencies
 └── README.md               # This file
 ```
 
 ## 🤝 Contributing
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-- **Interface**: Web app focused on steering demonstration
-- **Target Concepts**: Toxicity detection & company values alignment
-
-## Core Features
-- Real-time concept detection in text
-- Concept steering/clamping interface
-- Explainable activations visualization
-- Multi-concept support (toxicity, company values)
-
-## First Tasks
-[Defined below]
+This project is licensed under the MIT License.
