@@ -36,6 +36,36 @@ class ProbeConceptDetector(BaseConceptDetector):
         # The probe is a scikit-learn pipeline saved with joblib.
         return joblib.load(probe_path)
 
+    def get_activations(self, text: str) -> np.ndarray:
+        """
+        Gets the last-token activations from the MLP layer for a given text.
+
+        Args:
+            text (str): The input text.
+
+        Returns:
+            np.ndarray: The activations for the last token.
+        """
+        # Ensure the model is loaded
+        if not self.model.is_loaded():
+            self.model.load_model()
+
+        # Get the hook name for the MLP output layer
+        hook_name = utils.get_act_name("mlp_out", self.layer)
+        activations = []
+
+        def hook_fn(act, hook):
+            # Squeeze to remove batch dim, take last token, and detach
+            activations.append(act.squeeze(0)[-1].detach().cpu().numpy())
+
+        # Run the model with the hook
+        self.model.model.run_with_hooks(
+            text, fwd_hooks=[(hook_name, hook_fn)], stop_at_layer=self.layer + 1
+        )
+
+        # Reshape to (1, d_mlp) for the probe
+        return np.array(activations).reshape(1, -1)
+
     def detect(self, text: str) -> float:
         """
         Detects the presence of a concept using the probe.
@@ -48,7 +78,7 @@ class ProbeConceptDetector(BaseConceptDetector):
         """
         # 1. Extract features from the specified layer.
         # The extract_features method expects a list of texts.
-        activations = self.model.extract_features([text], layer=self.layer)
+        activations = self.get_activations(text)
 
         # 2. Use the probe to get a prediction.
         # The activations are already a numpy array.
