@@ -25,7 +25,7 @@ st.set_page_config(
 @st.cache_resource
 def load_gpt2_model():
     """Loads the base GPT-2 model. This is cached for performance."""
-    model = GPT2Model("gpt2-small")
+    model = GPT2Model("gpt2")
     model.load_model()
     return model
 

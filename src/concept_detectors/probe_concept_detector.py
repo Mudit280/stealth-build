@@ -1,8 +1,9 @@
 import joblib
 import numpy as np
+import transformer_lens.utils as utils
 
-from src.concept_detectors.base_concept_detector import BaseConceptDetector
 from src.models.gpt2_model import GPT2Model
+from src.concept_detectors.base_concept_detector import BaseConceptDetector
 
 
 class ProbeConceptDetector(BaseConceptDetector):
@@ -47,7 +48,7 @@ class ProbeConceptDetector(BaseConceptDetector):
             np.ndarray: The activations for the last token.
         """
         # Ensure the model is loaded
-        if not self.model.is_loaded():
+        if not self.model.is_loaded:
             self.model.load_model()
 
         # Get the hook name for the MLP output layer

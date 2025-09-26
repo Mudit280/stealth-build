@@ -114,6 +114,8 @@ Initial research is documented in `docs/conceptual explanation/understanding_con
 - Pre-trained probes save significant development time
 
 ## Next Steps After MVP
+- How I want to learn/work with Windsurf. Accordingly update approach e.g. windsurf rules etc.
+- Get better at becoming a power user too!
 - Dependong on goal, do bigger test and more accurate probe
 - Move to sparse autoencoders
 - Add hallucination toolkit
