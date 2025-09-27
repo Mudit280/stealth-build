@@ -77,8 +77,8 @@ Initial research is documented in `docs/conceptual explanation/understanding_con
 
 ## Hour 9-10: Integration & Interface
 - [x] Create simple interface (Streamlit chosen)
- - [ ] ~~CLI interface with argparse~~
- - [ ] Simple Streamlit web interface
+ - [x] ~~CLI interface with argparse~~
+ - [ ] Simple Streamlit web interface -> in-progress
  - [ ] ~~Jupyter notebook demo~~
  - [ ] Look into any known AI UX lessons?
 - [ ] Build end-to-end demo flow
